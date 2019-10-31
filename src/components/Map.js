@@ -5,7 +5,7 @@ import L from "leaflet";
 import { useAppStateValue } from "./AppState";
 import usePrevious from "../hooks/usePrevious";
 
-const getWaypointIcon = ({ label }) =>
+const createWaypointIcon = ({ label }) =>
   new L.DivIcon({
     className: "custom-pin",
     html: `<span>${label}</span>`
@@ -19,7 +19,7 @@ const Map = () => {
     ev => {
       const { lat, lng } = map.mouseEventToLatLng(ev.originalEvent);
       const marker = new L.marker([lat, lng], {
-        icon: getWaypointIcon({ label: waypoints.length + 1 })
+        icon: createWaypointIcon({ label: waypoints.length + 1 })
       }).addTo(map);
       addWaypoint(marker);
     },
@@ -39,6 +39,7 @@ const Map = () => {
       }),
     [map]
   );
+
   useEffect(() => {
     if (!map) {
       const mapInstance = new L.map("map").setView([46.3342, 13.8287], 13);
@@ -66,7 +67,7 @@ const Map = () => {
         waypoints !== prevWaypoints
       ) {
         waypoints.forEach((wp, index) =>
-          wp.setIcon(getWaypointIcon({ label: index + 1 }))
+          wp.setIcon(createWaypointIcon({ label: index + 1 }))
         );
       }
 
