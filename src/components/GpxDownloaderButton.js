@@ -22,19 +22,15 @@ const GpxDownloaderButton = () => {
   };
 
   return (
-    <Root onClick={handleDownload} disabled={waypoints.length === 0}>
-      {waypoints.length === 0 ? (
-        "Download your Route"
-      ) : (
-        <a
-          download={`letsgoandrun-${new Date().getTime()}.gpx`}
-          href={gpx}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Download your Route
-        </a>
-      )}
+    <Root onClick={handleDownload}>
+      <a
+        download={`letsgoandrun-${new Date().getTime()}.gpx`}
+        href={gpx}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Download your Route
+      </a>
     </Root>
   );
 };
@@ -52,10 +48,6 @@ const Root = styled.button`
   a {
     text-decoration: none;
     color: inherit;
-  }
-
-  &:disabled {
-    opacity: 0.5;
   }
 `;
 

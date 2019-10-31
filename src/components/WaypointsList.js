@@ -57,7 +57,7 @@ const WaypointsList = () => {
           />
         ))}
       </WaypointsContainer>
-      <GpxDownloaderButton />
+      {waypoints.length > 0 && <GpxDownloaderButton />}
     </Root>
   );
 };
