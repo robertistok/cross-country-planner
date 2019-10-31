@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import Waypoint from "./Waypoint";
+import GpxDownloaderButton from "./GpxDownloaderButton";
 
 import { useAppStateValue } from "./AppState";
 
@@ -18,14 +19,14 @@ const WaypointsList = () => {
     map.removeLayer(marker);
   };
 
-  const onDragStart = index => ev => {
+  const handleDragStart = index => ev => {
     setDraggedItem(waypoints[index]);
     ev.dataTransfer.effectAllowed = "move";
     ev.dataTransfer.setData("text/html", ev.target.parentNode);
     ev.dataTransfer.setDragImage(ev.target.parentNode, 20, 20);
   };
 
-  const onDragOver = index => () => {
+  const handleDragOver = index => () => {
     const draggedOverItem = waypoints[index];
 
     if (draggedItem === draggedOverItem) {
@@ -39,7 +40,7 @@ const WaypointsList = () => {
     reorderWaypoints([...items.slice()]);
   };
 
-  const onDragEnd = () => setDraggedItem(null);
+  const handleDragEnd = () => setDraggedItem(null);
 
   return (
     <Root>
@@ -50,13 +51,13 @@ const WaypointsList = () => {
             deleteWaypoint={handleWaypointDeletion(index)}
             key={index}
             index={index}
-            handleDragEnd={onDragEnd}
-            handleDragStart={onDragStart(index)}
-            handleDragOver={onDragOver(index)}
+            handleDragEnd={handleDragEnd}
+            handleDragStart={handleDragStart(index)}
+            handleDragOver={handleDragOver(index)}
           />
         ))}
       </WaypointsContainer>
-      <DownloadButton>Download your Route</DownloadButton>
+      <GpxDownloaderButton />
     </Root>
   );
 };
@@ -91,17 +92,6 @@ const WaypointsContainer = styled.ul`
   padding: 0;
   height: 500px;
   overflow: auto;
-`;
-
-const DownloadButton = styled.button`
-  color: #000;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 0px;
-  background-color: #c3e451;
-  width: 100%;
-  border: none;
-  border-radius: 2px;
 `;
 
 export default WaypointsList;
