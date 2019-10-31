@@ -53,10 +53,18 @@ const Map = () => {
   }, [initMap, map]);
 
   useEffect(() => {
-    if (waypoints.length !== prevWaypoints.length) {
-      clearMapOfPolylines();
+    if (
+      waypoints.length !== prevWaypoints.length ||
+      waypoints !== prevWaypoints
+    ) {
+      if (map) {
+        clearMapOfPolylines();
+      }
 
-      if (waypoints.length < prevWaypoints.length) {
+      if (
+        waypoints.length < prevWaypoints.length ||
+        waypoints !== prevWaypoints
+      ) {
         waypoints.forEach((wp, index) =>
           wp.setIcon(getWaypointIcon({ label: index + 1 }))
         );
@@ -68,7 +76,13 @@ const Map = () => {
         }).addTo(map);
       }
     }
-  }, [clearMapOfPolylines, map, prevWaypoints.length, waypoints]);
+  }, [
+    clearMapOfPolylines,
+    map,
+    prevWaypoints,
+    prevWaypoints.length,
+    waypoints
+  ]);
 
   useEffect(() => {
     if (map) {

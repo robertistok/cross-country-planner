@@ -3,6 +3,7 @@ import React, { createContext, useContext, useReducer } from "react";
 const INIT_MAP = "initMap";
 const ADD_WAYPOINT = "addWaypoint";
 const DELETE_WAYPOINT = "deleteWaypoint";
+const REORDER_WAYPOINTS = "reorderWaypoints";
 
 const useAppState = () => {
   const initialState = { map: undefined, waypoints: [] };
@@ -21,6 +22,8 @@ const useAppState = () => {
             (w, index) => index !== action.payload
           )
         };
+      case REORDER_WAYPOINTS:
+        return { ...state, waypoints: action.payload };
       default:
         return state;
     }
@@ -34,8 +37,10 @@ const useAppState = () => {
     dispatch({ type: ADD_WAYPOINT, payload: waypoint });
   const deleteWaypoint = index =>
     dispatch({ type: DELETE_WAYPOINT, payload: index });
+  const reorderWaypoints = newWaypoints =>
+    dispatch({ type: REORDER_WAYPOINTS, payload: newWaypoints });
 
-  return [state, { initMap, addWaypoint, deleteWaypoint }];
+  return [state, { initMap, addWaypoint, deleteWaypoint, reorderWaypoints }];
 };
 
 export const AppStateContext = createContext();
